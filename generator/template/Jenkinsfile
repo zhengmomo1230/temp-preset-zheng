@@ -1,0 +1,128 @@
+pipeline {
+    agent any
+	environment {
+		//Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
+		IMAGE = 'owcloud-portal-web'
+		VERSION = '1.1.1'
+	}
+    stages {
+        stage('Checkout') {//定义Checkout拉取代码
+            steps { //执行拉去代码阶段的操作步骤
+               echo '正在更新代码……'
+			   checkout(
+                [$class: 'SubversionSCM',
+                additionalCredentials: [], 
+                excludedCommitMessages: '',
+                excludedRegions: '', 
+                excludedRevprop: '',
+                excludedUsers: '', 
+                filterChangelog: false, 
+                ignoreDirPropChanges: false, 
+                includedRegions: '',
+                locations: [[cancelProcessOnExternalsFail: true,
+                credentialsId: 'svnJenkins', 
+                depthOption: 'infinity', 
+                ignoreExternalsOption: true,
+                local: '.', 
+                remote: 'https://192.168.10.253:8443/svn/OWCloud/trunk/owcloud_cloud_web/owcloud-portal-web']],
+                quietOperation: true, 
+                workspaceUpdater: [$class: 'UpdateUpdater']]
+                )
+            }
+        }
+        stage('Test') {//执行单元测试
+            steps {
+                echo ' 正在执行单元测试 '
+            }
+        }
+        stage('Build') {//执行前端代码的编译打包
+            steps {
+			  script{
+                echo ' 正在安装编译'
+                sh "pwd"
+                sh "who"
+                sh "node -v"
+                sh "npm -v"
+				sh label: 'npm install', script: 'npm install'//下载依赖包
+				sh label: 'npm run build', script: 'npm run build'//编译打包
+			  }
+            }
+        }
+        stage('Build Image') {//打包镜像
+            steps {
+				script{
+					echo '  正在打包镜像文件  '				
+					echo "workspace: ${WORKSPACE}"
+					echo "build_tag: ${BUILD_TAG}"
+					echo "node_name: ${NODE_NAME}"
+					echo "JOB_NAME: ${JOB_NAME}"
+					echo "currentBuild.displayName: ${currentBuild.displayName}"
+					echo "currentBuild.projectName: ${currentBuild.projectName}"
+					echo "IMAGE : ${IMAGE} "					
+					echo "VERSION : ${VERSION} "
+					echo "BUILD_NUMBER: ${BUILD_NUMBER}"
+					sh label: 'who', script: 'who'
+					echo "删除重名镜像"
+					try {
+						echo "防止镜像正在使用，先删除在删除镜像"
+						sh label: ' stop images', script: 'docker stop ${IMAGE} '
+						sh label: ' rm images', script: 'docker rm ${IMAGE} '
+						sh label: 'deleteImages', script: 'docker rmi 192.168.10.130/owcloudweb/${IMAGE}:${VERSION}'
+					}catch (exc) {
+                        echo '当前没有该名称的镜像'
+                    }
+					echo "打包镜像文件"
+					sh label: 'buildImage', script: 'docker build -t 192.168.10.130/owcloudweb/${IMAGE}:${VERSION} .'
+					echo "登陆harbor路径"
+					sh label: 'login', script: 'docker login 192.168.10.130 -u admin -p SHkj2wsx'
+					echo "推送到镜像仓库"
+					sh label: 'pushImage', script: 'docker push 192.168.10.130/owcloudweb/${IMAGE}:${VERSION}'
+				}
+            }
+        }
+        stage('SonarQube Scanner') {
+            steps {
+                echo 'This is a sonar step' 
+            }
+        }
+        // 部署
+        stage('Deploy') {
+            steps {
+				script{
+					echo 'Deploying'
+					echo 'sh \'mvn clean deploy\' -- 此处调用脚本或者ansible、saltstak，部署到远程 '
+					echo "  登录到ssh主机上 sh label: 'login SSH', script: 'ssh root@192.168.10.4'"
+					echo "下拉镜像仓库"
+					sh label: ' pull images', script: 'docker pull 192.168.10.130/owcloudweb/${IMAGE}:${VERSION}'
+					echo "关闭并删除 正在运行的容器 "
+					try{
+						sh label: ' stop images', script: 'docker stop ${IMAGE}'
+						sh label: ' rm images', script: 'docker rm ${IMAGE}'
+					} catch (exc) {
+                        echo '当前容器中没有正在运行的容器'
+                    }
+					echo "启动容器  "
+					sh label: ' pull images', script: 'docker run -itd -p 8112:8080 --name ${IMAGE} --privileged=true 192.168.10.130/owcloudweb/${IMAGE}:${VERSION}'
+				}
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}

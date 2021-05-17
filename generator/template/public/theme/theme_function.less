@@ -1,0 +1,34 @@
+@import url('./theme_color.less');
+
+/*
+theme函数中所传递的参数含义
+参数1：@themeColor  主调颜色
+参数2：@fontColor   字体颜色
+参数3：@fontColorHover 鼠标经过时字体颜色
+参数4：@linkColorHover 鼠标经过时链接的颜色
+参数5：@openFoldIcon 树形组件，表格组件中展开折叠图标颜色
+参数6：@pageBackgroundColor 页面背景颜色
+参数7：@subMenuShadow 子菜单边框颜色
+参数8：@tableHeadColor table组件中表头背景颜色
+参数9：@tableSplitLineColor table组件中分割线的颜色
+参数10：@tagBorderColor tag边框颜色
+*/ 
+
+
+.theme_dark {
+  .theme()
+}
+
+.theme_green {
+  .theme(#fff,
+  #666,
+  #333,
+  #333,
+  #333,
+  #f2f2f2,
+  #b3b3b3,
+  #fafafa,
+  #f2f2f2,
+  #ccc)
+  // .theme(#beeec1,#333,#eee)
+}

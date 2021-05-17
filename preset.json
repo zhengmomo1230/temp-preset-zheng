@@ -1,0 +1,28 @@
+{
+  "packageManager": "yarn",
+  "useTaobaoRegistry": true,
+  "useConfigFiles": true,
+  "vuex":true,
+  "router":true,
+  "routerHistoryMode": true,
+  "cssPreprocessor": "less",
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-eslint": {
+      "config": "standard",
+      "lintOn": ["save", "commit"]
+    },
+    "@vue/cli-plugin-router": {},
+    "@vue/cli-plugin-vuex": {}
+  },
+  "configs":{
+    "eslintConfig":{
+      "rules":{
+        "strict":0,
+        "no-alert": 0,
+        "space-before-function-paren": 0,
+        "space-in-parens": 0
+      }
+    }
+  }
+}

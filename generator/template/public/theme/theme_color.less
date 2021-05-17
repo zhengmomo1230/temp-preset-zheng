@@ -1,0 +1,386 @@
+.theme(@themeColor: #000,
+  @fontColor: #fff,
+  @fontColorHover: #000,
+  @linkColorHover: #000,
+  @openFoldIcon: #000,
+  @pageBackgroundColor: #1a1a1a,
+  @subMenuShadow: #333,
+  @tableHeadColor: #333,
+  @tableSplitLineColor: #666,
+  @tagBorderColor: #666) {
+
+  html,
+  body,
+  #app {
+    background-color: @themeColor  !important;
+    color: @fontColor  !important;
+    height: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: @fontColor;
+  }
+
+  .ant-table-placeholder {
+    background-color: transparent;
+  }
+
+  // 分页组件相关样式
+  .ant-pagination-item {
+    background-color: transparent;
+
+    a {
+      color: @fontColor;
+    }
+  }
+
+  .ant-pagination-item-link {
+    background-color: transparent;
+    color: @fontColor;
+  }
+
+  .ant-pagination-disabled {
+    .ant-pagination-item-link {
+      background-color: transparent;
+      color: #d9d9d9;
+    }
+  }
+
+  // 树形组件中的相关样式 (见菜单管理模块主页面)
+  .ant-table .ant-table-row-indent+.ant-table-row-expand-icon {
+    color: @themeColor;
+  }
+
+  // 对话框样式 -- modal
+  .ant-modal-header {
+    background-color: @themeColor;
+    color: @fontColor;
+
+    .ant-modal-title {
+      color: @fontColor;
+    }
+  }
+
+  .ant-modal-content {
+    background-color: @themeColor;
+    box-shadow: 0 2px 8px lighten(@subMenuShadow, 10%);
+    color: @fontColor;
+
+    .ant-modal-close {
+      color: @fontColor;
+    }
+  }
+
+  .ant-form,
+  .ant-form-item {
+    color: @fontColor;
+
+    .ant-form-item-label {
+      label {
+        color: @fontColor;
+      }
+    }
+  }
+
+  // radio组件相关
+  .ant-radio-wrapper {
+    color: @fontColor;
+
+    span.ant-radio+* {
+      color: @fontColor;
+    }
+  }
+
+  .ant-input {
+    background-color: transparent;
+    color: @fontColor;
+  }
+
+  ul {
+    li {
+      background-color: @themeColor;
+      color: @fontColor;
+
+      .anticon {
+        color: @fontColor;
+      }
+    }
+  }
+
+  // 对话框中数字输入框样式
+  .ant-input-number {
+    background-color: @themeColor;
+    color: @fontColor;
+
+    .ant-input-number-handler-wrap {
+      background-color: transparent;
+
+      .anticon {
+        color: @fontColor;
+      }
+    }
+  }
+
+  // 对话框底部footer样式
+  .drawer-bootom-button {
+    background-color: @themeColor;
+  }
+
+  // 对话框下表格的相关样式
+  .ant-table-thead>tr>th {
+    color: @fontColor;
+    background: @tableHeadColor;
+    border-bottom: 1px solid @tableSplitLineColor;
+  }
+
+  .ant-table-tbody>tr>td {
+    color: @fontColor;
+    border-bottom: 1px solid @tableSplitLineColor;
+  }
+
+  .ant-table-tbody>tr.ant-table-row-selected {
+    td {
+      color: @fontColor;
+    }
+  }
+
+  // card卡片样式
+  .ant-card {
+    background-color: transparent;
+
+    .ant-card-head-title {
+      color: @fontColor;
+    }
+  }
+
+  // 下拉选择框相关样式
+  .ant-select-selection {
+    background-color: transparent;
+    color: @fontColor;
+
+    .ant-select-arrow {
+      color: @fontColor;
+    }
+
+    .anticon {
+      color: @fontColor;
+    }
+  }
+
+  .ant-select-dropdown {
+    background-color: @themeColor;
+
+    .ant-select-not-found {
+      .ant-empty-description {
+        color: @fontColor;
+      }
+    }
+
+    .ant-select-tree {
+      .ant-select-tree-node-content-wrapper {
+        color: @fontColor;
+
+        &:hover {
+          color: @fontColorHover;
+        }
+      }
+    }
+
+    .ant-select-dropdown-menu-item {
+      color: @fontColor;
+
+      &:hover {
+        color: @fontColorHover;
+      }
+    }
+  }
+
+  .ant-select-selection--multiple {
+    .ant-select-selection__choice {
+      background-color: @themeColor;
+      color: @fontColor;
+    }
+  }
+
+  // confirm对话框样式
+  .ant-modal-confirm-body {
+
+    .ant-modal-confirm-title,
+    .ant-modal-confirm-content {
+      color: @fontColor;
+    }
+  }
+
+  // tab栏相关样式
+  .ant-tabs-tab {
+    color: @fontColor;
+  }
+
+  // 上传组件相关样式
+  .ant-upload.ant-upload-select-picture-card {
+    background-color: transparent;
+
+    .iconp {
+      color: @fontColor;
+    }
+  }
+
+  // 树结构相关组件
+  .ant-tree {
+    li {
+      .ant-tree-node-content-wrapper {
+        color: @fontColor;
+
+        &:hover {
+          color: @fontColorHover;
+        }
+      }
+
+      span.ant-tree-switcher {
+        background-color: transparent;
+
+        .anticon {
+          color: @fontColor;
+        }
+      }
+    }
+  }
+
+  .drawer-bootom-button {
+    background-color: @themeColor;
+  }
+
+  // 下拉菜单样式
+  .ant-dropdown-menu {
+    background-color: @themeColor;
+    box-shadow: 0 2px 8px lighten(@subMenuShadow, 10%);
+
+    .ant-dropdown-menu-item,
+    .ant-dropdown-menu-submenu-title {
+      a {
+        color: @fontColor;
+
+        &:hover {
+          color: @fontColorHover;
+        }
+      }
+
+      color: @fontColor;
+
+      &:hover {
+        color: @fontColorHover;
+      }
+    }
+  }
+
+  // 输入框相关样式
+  .ant-input-affix-wrapper .ant-input:not(:last-child),
+  .ant-input-group .ant-input {
+    color: @fontColor;
+    background-color: transparent;
+  }
+
+  // 搜索输入框样式
+  .ant-input-affix-wrapper .ant-input-prefix,
+  .ant-input-affix-wrapper .ant-input-suffix {
+    color: @fontColor;
+
+    .anticon {
+      color: @fontColor;
+    }
+  }
+
+  // a标签disabled的样式
+  a[disabled] {
+    color: #ccc;
+  }
+
+  // 面包屑导航样式
+  .ant-breadcrumb {
+    span {
+      color: @fontColor;
+
+      a {
+        color: @fontColor;
+      }
+    }
+  }
+
+  // 数据库管理相关样式
+  // 主页面
+  .DatabaseManagement {
+    background-color: @themeColor;
+
+    .bottom {
+
+      // tag标签相关样式
+      .ant-tag {
+        border: 1px solid @tagBorderColor;
+        background: fade(@tagBorderColor,10%);
+      }
+    }
+  }
+
+  // 数据发布
+  .DataService {
+    background-color: @themeColor;
+
+    .datalebottom {
+      p {
+        background-color: @themeColor;
+
+        span {
+          color: @fontColor;
+        }
+      }
+    }
+  }
+
+  // 数据发布中上方流程图样式
+  .registrations {
+    .liucheng {
+
+      .rigt,
+      .tops,
+      .topls,
+      .rigts,
+      .topq,
+      .toplsq,
+      .rigtsm,
+      .topqm,
+      .toplsqm {
+        border-color: transparent @themeColor transparent;
+      }
+    }
+  }
+
+  // 发布成功页面样式
+  .jurs {
+    background-color: @themeColor;
+
+    .gong,
+    .ming {
+      color: @fontColor;
+    }
+  }
+
+  // 数据查询页面相关样式
+  .dataSearchWrap {
+    background-color: @themeColor;
+  }
+
+  // 数据资源申请页面相关样式
+  .applicationWrap {
+    background-color: @themeColor;
+  }
+
+  // 创建数据库相关样式
+  .creatDataBaseWrap {
+    background-color: @themeColor;
+  }
+}

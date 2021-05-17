@@ -1,0 +1,41 @@
+// span,
+// td {
+//   font-size: @font-size-base;
+// }
+
+// 主页面相关样式
+.bordercolor {
+  color: @primary-color;
+  border-bottom: 1px solid @primary-color;
+}
+
+.form_title {
+  color: @primary-color;
+}
+
+// 详情页面相关样式
+.navar {
+  &>span {
+    color: @primary-color;
+  }
+}
+
+// 表格相关样式
+.ant-table-thead>tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td,
+.ant-table-tbody>tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td,
+.ant-table-thead>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td,
+.ant-table-tbody>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td {
+  background-color: lighten(fade(@primary-color, 50%), 40%);
+}
+
+.ant-table-tbody>tr.ant-table-row-selected {
+  td {
+    background: lighten(fade(@primary-color, 50%), 40%);
+  }
+
+  &:hover {
+    td {
+      background: lighten(fade(@primary-color, 50%), 40%);
+    }
+  }
+}
